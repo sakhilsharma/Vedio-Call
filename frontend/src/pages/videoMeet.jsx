@@ -13,6 +13,7 @@ import { useRef, useState, useEffect } from 'react';
 import io from "socket.io-client";
 import IconButton from "@mui/material/IconButton";
 var connections = {};
+import { useNavigate } from 'react-router-dom';
 
 const peerConfigConnections = { //stun servers
     "iceServers": [
@@ -21,6 +22,8 @@ const peerConfigConnections = { //stun servers
 }
 
 export default function VideoMeetComponent() {
+
+    const routeTo = useNavigate();
     //{window.location.href  /*this tells us where are we our address of frontend like:http://localhost:5173/4262 */}
 
     var socketRef = useRef();
@@ -39,7 +42,7 @@ export default function VideoMeetComponent() {
 
     let [screen, setScreen] = useState();
 
-    let [showModal, setShowModel] = useState();//popup and all
+    let [showModal, setShowModel] = useState(false);//popup and all
     let [screenAvailable, setScreenAvailable] = useState(); //need to check screen is Available or not
 
     let [messages, setMessages] = useState([]); //array
@@ -255,7 +258,10 @@ export default function VideoMeetComponent() {
         console.log("connected to scoket :step 1");
         socketRef.current = io.connect(server_url, { secure: false })
 
-        socketRef.current.on('signal', gotMessageFromServer)
+        socketRef.current.on('signal', gotMessageFromServer);
+
+        //chat inmplemetation
+        socketRef.current.on("chat-message", addMessage);
 
         socketRef.current.on('connect', () => {
             console.log("join call request sent");
@@ -456,6 +462,39 @@ export default function VideoMeetComponent() {
     let handleScreen = () => {
         setScreen(!screen);
     }
+
+    let chatMessage = () => {
+        setShowModel(!showModal);
+    }
+
+    let sendMessage = () => {
+        console.log(socketRef.current);
+        socketRef.current.emit('chat-message', message, username)
+        setMessage(""); // now we emit this message to backend socket and any request to the chat-message is 
+        //reponses in scoket connection as addMessage function: Implement addMessage after this
+
+        //// this.setState({ message: "", sender: username })
+    }
+    const addMessage = (data, sender, socketIdSender) => {
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: sender, data: data }
+        ]);
+        if (socketIdSender !== socketIdRef.current) {
+            setNewMessages((prevNewMessages) => prevNewMessages + 1);
+        }
+    };
+
+    let handleEndCall = () => {
+        try {
+            let tracks = localVideoRef.current.srcObject.getTracks();
+            tracks.forEach(track => track.stop())
+        }
+        catch (e) { }
+
+       routeTo("/home");
+    }
+
     return (
         <>
             <div>
@@ -475,11 +514,45 @@ export default function VideoMeetComponent() {
 
 
                     </div> : <div className='meetVideoContainer'>
+
+                        {showModal ? <div className="chatRoom">
+                            <h1>Chat</h1>
+                            <div className="chattingDisplay">
+
+                                {//we need to check the length of messages as if the there is no message it will show messages is not a map
+                                }
+                                {
+                                    messages.length !== 0 ? messages.map((item, index) => {
+
+                                        console.log(messages);
+                                        return (
+                                            <div style={{ marginBottom: "20px" }} key={index}>
+                                                <p style={{ fontWeight: "bold" }}>{item.sender}</p>
+                                                <p>{item.data}</p>
+                                            </div>
+                                        )
+                                    }) : <p>No Messages Yet</p>
+                                }
+                            </div>
+
+                            <div className="chatContainer">
+
+                                <div className="chattingArea">
+                                    <TextField label="Enter Message" id="outlined-basic" variant="outlined" value={message} onChange={(e) => setMessage(e.target.value)} />
+                                    <Button variant="contained" onClick={sendMessage}>Send</Button>
+                                </div>
+                            </div>
+
+                        </div> :
+                            <></>
+                        }
+
+
                         <div className="buttonContainer">
                             <IconButton onClick={handleVideo} style={{ color: 'white' }}>
                                 {(video === true) ? <VideocamIcon /> : <VideocamOffIcon />}
                             </IconButton>
-                            <IconButton style={{ color: 'red' }}>
+                            <IconButton onClick={handleEndCall} style={{ color: 'red' }}>
                                 <CallEndIcon />
                             </IconButton>
                             <IconButton onClick={handleAudio} style={{ color: 'white' }}>
@@ -493,7 +566,7 @@ export default function VideoMeetComponent() {
                                 </IconButton>}
 
                             <Badge badgeContent={newMessages} max={999} color={"secondary"}>
-                                <IconButton style={{ color: 'white' }}>
+                                <IconButton style={{ color: 'white' }} onClick={chatMessage}>
                                     <ChatIcon />
                                 </IconButton>
                             </Badge>
@@ -506,7 +579,7 @@ export default function VideoMeetComponent() {
                                     <div key={video.socketId} >
 
                                         <video
-
+                                            className="conferenceClients"
                                             data-socket={video.socketId}
                                             ref={
                                                 ref => {
