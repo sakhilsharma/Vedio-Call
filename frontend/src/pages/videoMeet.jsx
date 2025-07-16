@@ -12,6 +12,7 @@ import ChatIcon from '@mui/icons-material/Chat'
 import { useRef, useState, useEffect } from 'react';
 import io from "socket.io-client";
 import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
 var connections = {};
 import { useNavigate } from 'react-router-dom';
 
@@ -48,7 +49,7 @@ export default function VideoMeetComponent() {
     let [messages, setMessages] = useState([]); //array
 
     let [message, setMessage] = useState("");
-    let [newMessages, setNewMessages] = useState(2); //title popup
+    let [newMessages, setNewMessages] = useState(0); //title popup
 
     let [askForUsername, setAskForUsername] = useState(true);
     let [username, setUsername] = useState("");
@@ -256,17 +257,22 @@ export default function VideoMeetComponent() {
 
     let connectToSocketServer = () => {
         console.log("connected to scoket :step 1");
-        socketRef.current = io.connect(server_url, { secure: false })
 
+        //as a connection request is sent it automatically passes the socket/client credentials to backend as parameter
+        //for every client/user specific socket.io is crearted by scoket.io package
+        socketRef.current = io.connect(server_url, { secure: false })
+        //created user side scoket 
+        //secure is just an header
         socketRef.current.on('signal', gotMessageFromServer);
 
         //chat inmplemetation
         socketRef.current.on("chat-message", addMessage);
 
+
         socketRef.current.on('connect', () => {
             console.log("join call request sent");
-            socketRef.current.emit('join-call', window.location.href)
-            socketIdRef.current = socketRef.current.id;
+            socketRef.current.emit('join-call', window.location.href);
+            socketIdRef.current = socketRef.current.id; //make a scoketisRef for the newly connected socket/user
 
             socketRef.current.on('user-left', (id) => {
                 setVideos((videos) => videos.filter((video) => video.socketId !== id))
@@ -295,12 +301,14 @@ export default function VideoMeetComponent() {
                         console.log("Event stream tracks:", event.stream.getTracks());
 
                         setVideos(currentVideos => {
-                            console.log("Current videos in state:", currentVideos);
-
+                            console.log("Current videos in state:", currentVideos);//this is an array 
+                            //make eshure the id may exist already in the room 
                             let videoExists = currentVideos.find(video => video.socketId === socketListId);
 
                             if (videoExists) {
+                                //Already Exists → Update the Stream
                                 console.log("FOUND EXISTING - Updating stream");
+                                //Replaces the old stream with the new one for that socketId.
                                 const updatedVideos = currentVideos.map(video =>
                                     video.socketId === socketListId ? { ...video, stream: event.stream } : video
                                 );
@@ -310,6 +318,7 @@ export default function VideoMeetComponent() {
                             } else {
                                 // Create a new video
                                 console.log("CREATING NEW video entry");
+                                //created a custom object === every video should have socketId , stream souurce, autplay etc
                                 let newVideo = {
                                     socketId: socketListId,
                                     stream: event.stream,
@@ -330,19 +339,27 @@ export default function VideoMeetComponent() {
                     if (window.localStream !== undefined && window.localStream !== null) {
                         connections[socketListId].addStream(window.localStream)
                     } else {
+                        //black silence
                         let blackSilence = (...args) => new MediaStream([black(...args), silence()])
                         window.localStream = blackSilence()
                         connections[socketListId].addStream(window.localStream)
                     }
                 })
 
+                //WebRTC offer broadcasting block
                 if (id === socketIdRef.current) {
                     for (let id2 in connections) {
-                        if (id2 === socketIdRef.current) continue
-
+                        if (id2 === socketIdRef.current) continue;//if it matches the current connected user 
+                        //else
                         try {
+                            //Tries to attach your own webcam/audio to the peer connection.
+                            //This is what lets others receive your video.
                             connections[id2].addStream(window.localStream)
                         } catch (e) { }
+
+                        //Creating an offer to establish the peer connection::::::::::LIKE
+                        //“Hey id2, I’m trying to connect to you.
+                        //Here’s my connection offer. Please look at it and respond.”
 
                         connections[id2].createOffer().then((description) => {
                             connections[id2].setLocalDescription(description)
@@ -392,6 +409,7 @@ export default function VideoMeetComponent() {
         setAudio(!audio)
         // getUserMedia();
     }
+
 
     let getDisplayMediaSuccess = (stream) => {
         //SCREEN SHARING FEATURE
@@ -492,31 +510,39 @@ export default function VideoMeetComponent() {
         }
         catch (e) { }
 
-       routeTo("/home");
+        routeTo("/home");
     }
 
     return (
         <>
             <div>
                 {askForUsername === true ?
-                    <div>
-
+                    <div className="LobbyArea">
                         <h2>Enter Into Lobby</h2>
-                        <TextField id="outlined-basic" label="Outlined" value={username} onChange={(e) => { setUsername(e.target.value) }} variant="outlined" />
-                        <Button variant="contained" onClick={connect}>Connect</Button>
+                        <TextField
+                            id="outlined-basic"
+                            label="Enter Name"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            variant="outlined"
+                        />
+                        <Button variant="contained" onClick={connect}>
+                            Connect
+                        </Button>
 
-                        <div>{/* video div*/}
+                        <div className="video-container">
                             <video ref={localVideoRef} autoPlay muted></video>
-
-
-
                         </div>
+                    </div>
 
 
-                    </div> : <div className='meetVideoContainer'>
+                    : <div className='meetVideoContainer'>
 
                         {showModal ? <div className="chatRoom">
                             <h1>Chat</h1>
+                            <IconButton className="closeButton" onClick={chatMessage}>
+                                <CloseIcon />
+                            </IconButton>
                             <div className="chattingDisplay">
 
                                 {//we need to check the length of messages as if the there is no message it will show messages is not a map
@@ -540,6 +566,8 @@ export default function VideoMeetComponent() {
                                 <div className="chattingArea">
                                     <TextField label="Enter Message" id="outlined-basic" variant="outlined" value={message} onChange={(e) => setMessage(e.target.value)} />
                                     <Button variant="contained" onClick={sendMessage}>Send</Button>
+
+
                                 </div>
                             </div>
 
@@ -595,6 +623,7 @@ export default function VideoMeetComponent() {
                                         >
                                         </video>
 
+
                                     </div>
                                 ))
                             }
@@ -602,7 +631,7 @@ export default function VideoMeetComponent() {
                     </div>
 
                 }
-            </div>
+            </div >
         </>
     )
 }

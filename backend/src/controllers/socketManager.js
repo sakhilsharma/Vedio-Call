@@ -18,6 +18,7 @@ export const connectToSocket = (server) => {
 
     //main socket.io comunication stuff: io.on()// like a event listner
     //these lines down: new client connected to socket and callback function
+    //connect request from specific client from frontend is hanled here
     io.on("connection", (socket) => {
         //here can put any name but on client side should be same during hearing(.emit)
         console.log("SOMETHING IS CONNECTED");
@@ -39,7 +40,7 @@ export const connectToSocket = (server) => {
             timeOnline[socket.id] = new Date();
             //response from server to individual client (emit) that user joined and with we send socket id
             for (let a = 0; a < connections[path].length; a++) {
-                io.to(connections[path][a]).emit("user-joined", socket.id, connections[path])
+                io.to(connections[path][a]).emit("user-joined", socket.id, connections[path])//we have now the new;y joined scoket and all the existing socket in the array
             }
 
 

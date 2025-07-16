@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
         }
     }
 
+    //functions to handle history of user
     const getHistoryOfUser = async () => {
         try {
             let request = await client.get("/get_all_activity", {
@@ -67,7 +68,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
             });
             return request.data
         } catch
-         (err) {
+        (err) {
             throw err;
         }
     }
@@ -83,6 +84,8 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
             throw e;
         }
     }
+
+   
 
 
     const data = {

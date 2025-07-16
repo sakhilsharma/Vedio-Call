@@ -1,53 +1,340 @@
-
-.landingPageContainer{
-  height:100vh;
-  width:100vw;
-  background:url("./background.png");
-  background-repeat:no-repeat;
-  background-size:cover;
-  color:white;
-}
-.landingPageContainer nav{
-padding-inline:1.2rem;
-padding-blocK:1.6rem;
-display:flex;
-justify-content:space-between;
-}
-.landingPageContainer nav h2{
-  font-size:1.8rem;
-  font-weight:500;
+.landingPageContainer {
+  height: 100vh;
+  width: 100vw;
+  background: url("./background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
 }
 
-.landingPageContainer nav .navlist{
-  display:flex;
-  gap:1rem;
-  cursor:pointer;
+.landingPageContainer nav {
+  padding-inline: 1.2rem;
+  padding-blocK: 1.6rem;
+  display: flex;
+  justify-content: space-between;
 }
-.landingMainContianer{
-  display:flex;
-  justify-content:space-between;
-  padding-inline:3rem;
-  height:70vh;
-  align-items:center;
+
+.landingPageContainer nav h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
 }
-.landingMainContianer > div:nth-child(1){
+
+.landingPageContainer nav .navlist {
+  display: flex;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.landingMainContianer {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 3rem;
+  height: 70vh;
+  align-items: center;
+}
+
+.landingMainContianer>div:nth-child(1) {
   font-size: 2.2rem;
 }
-.landingMainContianer > div:nth-child(1) div[role='button']{
- background:#D97500;
- width:fit-content;
- padding:1rem;
-  border-radius:20px;
-  margin-top:1.4rem;
-}
-.landingMainContianer > div:nth-child(1) div[role='button'] a{
-  text-decoration:none;
-  color:white;
-  font-size:1.7rem;
- 
-}
-.landingMainContianer > div:nth-child(2) img{
-  height:70vh;
-  width:auto;
 
+.landingMainContianer>div:nth-child(1) div[role='button'] {
+  background: #D97500;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-top: 1.4rem;
+}
+
+.landingMainContianer>div:nth-child(1) div[role='button'] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.7rem;
+
+}
+
+.landingMainContianer>div:nth-child(2) img {
+  height: 70vh;
+  width: auto;
+
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #6a5acd, #483d8b);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.navbar h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Right-side items (History and Logout) */
+.navbar .MuiIconButton-root {
+  color: #2b2222;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: transform 0.2s ease;
+}
+
+.navbar .MuiIconButton-root:hover {
+  transform: scale(1.1);
+}
+
+.navbar p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Logout button */
+.navbar button {
+  background-color: #ffffff;
+  color: #483d8b;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.navbar button:hover {
+  background-color: #e8e8ff;
+  transform: scale(1.05);
+}
+
+.rightPanel {
+  padding-right: 3rem;
+
+}
+
+/* Right Panel Image Styling */
+.rightPanel img {
+  height: 50vh;
+  width: auto;
+  min-width: 20vw;
+
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  object-fit: contain;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.rightPanel img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* Left Panel (Card UI) */
+.leftPanel {
+  background: linear-gradient(145deg, #ffffff, #f1f3f8);
+  padding: 50px 40px;
+  border-radius: 24px;
+  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.08);
+  max-width: 620px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 35px;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
+}
+
+/* Heading Text */
+.Heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1d1d35;
+  line-height: 1.6;
+  letter-spacing: 0.6px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Material UI TextField wrapper */
+.leftPanel .MuiTextField-root {
+  flex: 1;
+  background-color: #f7f9fc;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Input text style */
+.leftPanel .MuiInputBase-input {
+  padding: 14px 16px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #2c2f41;
+}
+
+/* Button Styling */
+.leftPanel button {
+  padding: 14px 26px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7b5eff, #5e42c6);
+  color: #fff;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(94, 66, 198, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .navbar h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .navbar .MuiIconButton-root {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  .navbar button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .leftPanel {
+    padding: 30px 20px;
+    max-width: 100%;
+    gap: 24px;
+  }
+
+  .Heading {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .leftPanel button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .rightPanel {
+    padding-right: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .rightPanel img {
+    max-height: 60vh;
+    max-width: 90%;
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    object-fit: contain;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .rightPanel img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 10px 16px;
+  }
+
+  .leftPanel {
+    padding: 24px 16px;
+  }
+
+  .Heading {
+    font-size: 20px;
+  }
+
+  .leftPanel .MuiInputBase-input {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .leftPanel button {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .rightPanel {
+
+    display: inline;
+    width:0rem;
+    
+  }
+
+  .rightPanel img {
+    width: 7rem;
+    max-height: 12vh;
+    border-radius: 4rem;
+       margin-left: -2.5rem;
+    padding: 8px;
+
+  }
+}
+
+.leftPanel button:hover {
+  background: linear-gradient(135deg, #5e42c6, #3e2a94);
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(62, 42, 148, 0.45);
+}
+
+.auth-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.auth-left {
+  flex: 1;
+  background-color: #fff;
+  /* Optional: you can leave this white or add a logo later */
+}
+
+.auth-right {
+  flex: 1;
+  background-image: url('/connect.png');
+  /* ✅ shown on right side */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.MuiBox-root {
+  height: 80vh;
 }

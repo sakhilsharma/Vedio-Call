@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../context/AuthContext';
 import { Snackbar } from '@mui/material';
-
+import "../App.css"
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -67,6 +67,7 @@ export default function Auth() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -75,7 +76,7 @@ export default function Auth() {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: `url(https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1350&q=80)`,
+                        backgroundImage: `url(/connect.png)`, // ✅ Use leading slash
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -83,84 +84,92 @@ export default function Auth() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-
-                        {/*sign element*/ /*0== login and 1 == formState */}
-                        <div>
-                            {/*apply varient-ui property */}
-                            <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
-                                Sign In
-                            </Button>
-                            <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
-                                Sign Up
-                            </Button>
-                        </div>
-
-                        <Box component="form" noValidate sx={{ mt: 1 }}>
-                            {formState === 1 ? <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Full Name"
-                                name="username"
-                                value={name}
-                                autoFocus
-                                onChange={(e) => setName(e.target.value)}
-                            /> : <></>}
-
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
-                                value={username}
-                                autoFocus
-                                onChange={(e) => setUsername(e.target.value)}
-
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                value={password}
-                                type="password"
-                                onChange={(e) => setPassword(e.target.value)}
-
-                                id="password"
-                            />
-
-                            <p style={{ color: "red" }}>{error}</p>
-
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                onClick={handleAuth}
+                <div className="auth-layout">
+                    <div className="auth-left">
+                        <Grid item xs={12} sm={8} md={5}  elevation={6} square>
+                            <Box
+                                sx={{
+                                    my: 8,
+                                    mx: 4,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                }}
                             >
-                                {formState === 0 ? "Login " : "Register"}
-                            </Button>
+                                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                    <LockOutlinedIcon />
+                                </Avatar>
 
-                        </Box>
-                    </Box>
-                </Grid>
+                                {/*sign element*/ /*0== login and 1 == formState */}
+                                <div>
+                                    {/*apply varient-ui property */}
+                                    <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
+                                        Sign In
+                                    </Button>
+                                    <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
+                                        Sign Up
+                                    </Button>
+                                </div>
+
+                                <Box component="form" noValidate sx={{ mt: 1 }}>
+                                    {formState === 1 ? <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="username"
+                                        label="Full Name"
+                                        name="username"
+                                        value={name}
+                                        autoFocus
+                                        onChange={(e) => setName(e.target.value)}
+                                    /> : <></>}
+
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="username"
+                                        label="Username"
+                                        name="username"
+                                        value={username}
+                                        autoFocus
+                                        onChange={(e) => setUsername(e.target.value)}
+
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        value={password}
+                                        type="password"
+                                        onChange={(e) => setPassword(e.target.value)}
+
+                                        id="password"
+                                    />
+
+                                    <p style={{ color: "red" }}>{error}</p>
+
+                                    <Button
+                                        type="button"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2 }}
+                                        onClick={handleAuth}
+                                    >
+                                        {formState === 0 ? "Login " : "Register"}
+                                    </Button>
+
+                                </Box>
+                            </Box>
+                        </Grid>
+                    </div>
+
+                    <div className="auth-right">
+                     
+                    </div>
+                </div>
             </Grid>
 
             <Snackbar
