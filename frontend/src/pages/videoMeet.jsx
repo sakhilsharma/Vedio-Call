@@ -1,4 +1,4 @@
-const server_url = "http://localhost:8000"; //web socket server
+
 import "../styles/videoComponent.css";
 import { Badge, TextField, Button } from '@mui/material';
 import VideocamIcon from '@mui/icons-material/Videocam';
@@ -15,7 +15,8 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 var connections = {};
 import { useNavigate } from 'react-router-dom';
-
+import server from '../environment'
+const server_url = server; //web socket server
 const peerConfigConnections = { //stun servers
     "iceServers": [
         { "urls": "stun:stun.l.google.com:19302" }
