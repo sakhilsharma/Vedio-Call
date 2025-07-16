@@ -59,7 +59,7 @@ const register = async (req, res) => {
 
 
 //extra functions of user History
-const getUserHistory = async () => {
+const getUserHistory = async (req,res) => {
   const { token } = req.query;
   try {
     const user = await User.findOne({ token: token });
@@ -70,7 +70,7 @@ const getUserHistory = async () => {
     res.json({ message: `Something Went Wrong ${e}` });
   }
 }
-const addToHistory = async () => {
+const addToHistory = async (req,res) => {
   const { token, meetingCode } = req.body;
   try {
     const user = await User.findOne({ token: token });
