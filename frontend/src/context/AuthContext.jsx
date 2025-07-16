@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
 
     //functions to handle history of user
     const getHistoryOfUser = async () => {
+       
         try {
             let request = await client.get("/get_all_activity", {
                 params: {
@@ -67,8 +68,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
                 }
             });
             return request.data
-        } catch
-        (err) {
+        } catch (err) {
             throw err;
         }
     }
@@ -79,6 +79,13 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
                 token: localStorage.getItem("token"),
                 meeting_code: meetingCode
             });
+          
+            try{
+                console.log(request);
+            }
+            catch(e){
+                throw e;
+            }
             return request
         } catch (e) {
             throw e;

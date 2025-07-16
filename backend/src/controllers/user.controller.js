@@ -59,32 +59,37 @@ const register = async (req, res) => {
 
 
 //extra functions of user History
-const getUserHistory = async (req,res) => {
+const getUserHistory = async (req, res) => {
   const { token } = req.query;
+  
+
   try {
     const user = await User.findOne({ token: token });
-    const meeting = await Meeting.find({ user_id: user.username });
-    res.json(meeting);
-  }
-  catch (e) {
-    res.json({ message: `Something Went Wrong ${e}` });
-  }
-}
-const addToHistory = async (req,res) => {
-  const { token, meetingCode } = req.body;
-  try {
-    const user = await User.findOne({ token: token });
-    const newMeeting = new Meeting({
-      user_id: user.username,
-      meetingCode: meetingCode
-    });
-
-    await newMeeting.save();
-    res.status(httpStatus.CREATED).json({ message: "Added Code to history" })
-
+    const meetings = await Meeting.find({ user_id: user.username })
+   
+    res.json(meetings)
   } catch (e) {
     res.json({ message: `Something went wrong ${e}` })
   }
 }
 
-export { register, login ,getUserHistory,addToHistory}
+const addToHistory = async (req, res) => {
+  const { token, meeting_code } = req.body;
+   console.log(req.body.token);
+  try {
+    const user = await User.findOne({ token: token });
+
+    const newMeeting = new Meeting({
+      user_id: user.username,
+      meetingCode: meeting_code
+    })
+
+    await newMeeting.save();
+
+    res.status(httpStatus.CREATED).json({ message: "Added code to history" })
+  } catch (e) {
+    res.json({ message: `Something went wrong ${e}` })
+  }
+}
+
+export { register, login, getUserHistory, addToHistory }

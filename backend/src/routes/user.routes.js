@@ -4,7 +4,7 @@ const router = Router();
 router.route("/login").post(login);  //creating a post request on login with function as value
 router.route('/register').post(register);
 router.route("/add_to_activity").post(addToHistory);
-router.route("/get_all_activity").post(getUserHistory);
+router.route("/get_all_activity").get(getUserHistory);
 
 
 export default router;

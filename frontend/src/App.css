@@ -451,6 +451,7 @@
 
 .auth-right {
   flex: 1;
+  
   background-image: url('/connect.png');
   /* ✅ shown on right side */
   background-size: cover;
@@ -462,7 +463,11 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
-
+@media (max-width:520px){
+.auth-right{
+  display:none;
+}
+}
 .MuiBox-root {
   height: 80vh;
 }
