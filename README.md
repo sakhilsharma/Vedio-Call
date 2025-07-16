@@ -37,21 +37,7 @@ WebSockets with Socket.IO	Real-time signaling between clients for connection set
 Window Object Handling	Accessing camera, microphone, and media devices dynamically using navigator.mediaDevices.
 React Component Architecture	Functional hooks-based design for managing state, streams, and UI.
 
-🧩 Folder Structure (Simplified)
-bash
-Copy
-Edit
-/front           # React + Vite frontend
-  └── components
-  └── pages
-  └── socketClient.js
-  └── App.jsx
 
-/backend         # Node.js + Express backend
-  └── src
-      └── app.js
-      └── socketHandlers.js
-      └── models/
 🧠 Why This Stack?
 WebRTC & Socket.IO are industry standards for building Zoom-like, WhatsApp Call, or Discord-style real-time apps.
 
