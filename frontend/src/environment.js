@@ -1,4 +1,4 @@
-const IS_PROD = true;
+const IS_PROD = false;
 const server = IS_PROD ?
     "https://video-call-meetingbackend.onrender.com" //production url
     :
