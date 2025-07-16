@@ -1,6 +1,7 @@
 /* Remove image, use gradient background */
 .landingPageContainer.noImage {
-  height: 100vh;
+  min-height: 100vh;
+
   width: 100vw;
   background: linear-gradient(135deg, #2f2b75, #483d8b);
   color: white;
@@ -96,6 +97,7 @@
   font-size: 1.4rem;
   font-weight: bold;
 }
+
 .landingMainContainer.withImage {
   display: flex;
   justify-content: space-between;
@@ -110,6 +112,7 @@
   max-width: 100%;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
 }
+
 .landingMainContainer.withImage {
   display: flex;
   justify-content: space-between;
@@ -142,24 +145,43 @@
 /* Responsive */
 @media screen and (max-width: 768px) {
   .landingMainContainer.withImage {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    gap:0;
     text-align: center;
     padding: 2rem;
-    min-height: 100ch; /* ensures it fills vertical space even with less content */
+    min-height: 100ch;
+    /* ensures it fills vertical space even with less content */
     justify-content: center;
   }
 
   .landingTextBlock {
     text-align: center;
+   
+  }
+  .landingTextBlock h1  {
+    font-size: 2rem;
+  }
+  .landingTextBlock>p{
+    font-size: 1rem;
   }
 
   .landingImage {
     margin-top: 2rem;
+    max-height: 7rem;
   }
 
   .landingImage img {
     width: 90%;
-    max-height: 40vh;
+    
+    
+  }
+
+  .navHeader h2 {
+    font-size: 1rem;
+  }
+
+  .navlist {
+    flex-direction: column;
   }
 }
 
@@ -395,15 +417,15 @@
   .rightPanel {
 
     display: inline;
-    width:0rem;
-    
+    width: 0rem;
+
   }
 
   .rightPanel img {
     width: 7rem;
     max-height: 12vh;
     border-radius: 4rem;
-       margin-left: -2.5rem;
+    margin-left: -2.5rem;
     padding: 8px;
 
   }

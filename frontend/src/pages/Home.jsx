@@ -29,13 +29,23 @@ function Home() {
                         <HistoryIcon />
                         <p>History</p>
                     </IconButton>
+                    {
+                        localStorage.getItem("token") ?
+                            <Button onClick={() => {
+                                localStorage.removeItem("token");
+                                navigate("/auth");
+                            }}>
+                                Log-Out
+                            </Button>
+                            :
+                            <Button onClick={() => {
+                                
+                                navigate("/auth");
+                            }}>
+                                Log-In
+                            </Button>
 
-                    <Button onClick={() => {
-                        localStorage.removeItem("token");
-                        navigate("/auth");
-                    }}>
-                        Log-Out
-                    </Button>
+                    }
                 </div>
 
             </div>
@@ -44,7 +54,7 @@ function Home() {
 
                     <h2 className="Heading">
                         Providing Vedio Call To Call Your Loved Ones.</h2>
-                        <h3>Enter Meeting Code Or Create:</h3>
+                    <h3>Enter Meeting Code Or Create:</h3>
                     <div style={{ display: "flex", gap: "10px" }}>
                         <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined"></TextField>
                         <Button onClick={handleJoinVideoCall} variant="contained"> JOIN </Button>
