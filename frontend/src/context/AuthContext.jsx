@@ -32,10 +32,8 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
 
 
             if (request.status === httpStatus.CREATED) {
-               
                 return request.data.message;
             }
-           
         } catch (err) {
             throw err;
         }
@@ -48,11 +46,12 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
                 password: password
             });
 
+           
             console.log(request.data)
 
             if (request.status === httpStatus.OK) {
                 localStorage.setItem("token", request.data.token);
-                router("/home");
+                router("/home")
             }
         } catch (err) {
             throw err;

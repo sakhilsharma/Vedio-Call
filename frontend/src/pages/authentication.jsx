@@ -59,7 +59,7 @@ export default function Auth() {
             }
         } catch (err) {
 
-            console.log(err);
+            console.log(err.response.data.message);
             let message = (err.response.data.message);
             setError(message);
         }
