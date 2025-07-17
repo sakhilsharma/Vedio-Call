@@ -446,6 +446,7 @@
 .auth-left {
   flex: 1;
   background-color: #fff;
+  z-index:1000;
   /* Optional: you can leave this white or add a logo later */
 }
 
@@ -466,6 +467,7 @@
 @media (max-width:520px){
 .auth-right{
   display:none;
+  z-index:1;
 }
 }
 .MuiBox-root {

@@ -48,6 +48,7 @@ export default function Auth() {
             }
             if (formState === 1) {
                 let result = await handleRegister(name, username, password);
+                alert(result);
                 console.log(result);
                 setUsername("");
                 setMessage(result);
@@ -86,7 +87,7 @@ export default function Auth() {
                 />
                 <div className="auth-layout">
                     <div className="auth-left">
-                        <Grid item xs={12} sm={8} md={5}  elevation={6} square>
+                        <Grid item xs={12} sm={8} md={5} elevation={6} square>
                             <Box
                                 sx={{
                                     my: 8,
@@ -101,15 +102,27 @@ export default function Auth() {
                                 </Avatar>
 
                                 {/*sign element*/ /*0== login and 1 == formState */}
-                                <div>
-                                    {/*apply varient-ui property */}
+                                <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                                     <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
                                         Sign In
                                     </Button>
                                     <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
                                         Sign Up
                                     </Button>
+
+                                    {formState === 0 && (
+                                        <p style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
+                                            New here?{" "}
+                                            <span
+                                                style={{ color: "#1976d2", cursor: "pointer", textDecoration: "underline" }}
+                                                onClick={() => setFormState(1)}
+                                            >
+                                                Register a new account
+                                            </span>
+                                        </p>
+                                    )}
                                 </div>
+
 
                                 <Box component="form" noValidate sx={{ mt: 1 }}>
                                     {formState === 1 ? <TextField
@@ -167,7 +180,7 @@ export default function Auth() {
                     </div>
 
                     <div className="auth-right">
-                     
+
                     </div>
                 </div>
             </Grid>

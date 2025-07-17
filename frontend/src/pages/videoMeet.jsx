@@ -526,10 +526,15 @@ export default function VideoMeetComponent() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             variant="outlined"
-                        />
-                        <Button variant="contained" onClick={connect}>
+                        /> 
+                        {username ?<Button variant="contained" onClick={connect}>
                             Connect
-                        </Button>
+                        </Button> :
+                        <Button variant="contained" disabled>
+                        Connect
+                    </Button>
+                         }
+                        
 
                         <div className="video-container">
                             <video ref={localVideoRef} autoPlay muted></video>

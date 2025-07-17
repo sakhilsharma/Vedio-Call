@@ -15,7 +15,7 @@ const client = axios.create({
 export const AuthProvider = ({ children }) => { //childern: like what are we providing inside the rapper
 
     const authContext = useContext(AuthContext);
-
+    
 
     const [userData, setUserData] = useState(authContext);
 
@@ -32,8 +32,10 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
 
 
             if (request.status === httpStatus.CREATED) {
+               
                 return request.data.message;
             }
+           
         } catch (err) {
             throw err;
         }
@@ -46,7 +48,6 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
                 password: password
             });
 
-            console.log(username, password)
             console.log(request.data)
 
             if (request.status === httpStatus.OK) {
@@ -60,7 +61,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
 
     //functions to handle history of user
     const getHistoryOfUser = async () => {
-       
+
         try {
             let request = await client.get("/get_all_activity", {
                 params: {
@@ -79,11 +80,11 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
                 token: localStorage.getItem("token"),
                 meeting_code: meetingCode
             });
-          
-            try{
+
+            try {
                 console.log(request);
             }
-            catch(e){
+            catch (e) {
                 throw e;
             }
             return request
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }) => { //childern: like what are we pro
         }
     }
 
-   
+
 
 
     const data = {

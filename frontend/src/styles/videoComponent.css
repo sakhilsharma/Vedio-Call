@@ -124,6 +124,7 @@
   gap: 8px;
   background: white;
   padding: 8px 0 0 0;
+  z-index:1000;
 }
 
 .chattingArea {
@@ -238,4 +239,23 @@
   .chatRoom h1 {
     font-size: 1.4rem;
   }
+  .meetContianer{
+    display: flex;
+    flex-direction: column;
+    gap:0;
+    padding:0.5rem
+    
+  }
+  .rightPanel{
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+  .rightPanel img{
+    height:10rem;
+    position: relative;
+    bottom: 3rem;
+    left: 2rem;
+  }
+  
 }
